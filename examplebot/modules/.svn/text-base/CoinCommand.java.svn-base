@@ -1,0 +1,50 @@
+package modules;
+
+import org.schwering.irc.lib.IRCUser;
+
+import core.Bot;
+import core.BotCommand;
+import core.BotException;
+import java.util.*;
+
+public class CoinCommand implements BotCommand {
+
+	public String getUsage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void execute(Bot bot, String channel, IRCUser user, String message)
+			throws BotException {
+		
+		StringTokenizer msg = new StringTokenizer(message);
+		int tokenCount = msg.countTokens();
+		if (tokenCount>1)
+		{
+			ArrayList<String> choice = new ArrayList<String>();
+			while (msg.hasMoreTokens())
+			{
+				choice.add(msg.nextToken());
+			}
+			bot.msg(channel, choice.get(new Random().nextInt(tokenCount)));
+			
+			
+		}else {
+		
+		
+		if (new Random().nextBoolean())
+		{
+			bot.msg(channel, "heads");
+		}
+		else {
+			bot.msg(channel, "tails");
+		}
+		}
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "coin";
+	}
+
+}

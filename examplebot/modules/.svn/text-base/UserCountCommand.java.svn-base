@@ -1,0 +1,43 @@
+package modules;
+import org.schwering.irc.lib.IRCUser;
+import java.util.*;
+import core.*;
+import utils.*;
+
+public class UserCountCommand implements BotCommand {
+
+	
+	public String getUsage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String getName()
+	{
+		return "usercount";
+	}
+	public void execute(Bot bot, String channel, IRCUser user, String message) throws BotException {
+		// TODO Auto-generated method stub
+		//Bot.getConnection().
+		List<IRCUser> userList = new LinkedList<IRCUser>();
+		for (Iterator<String> i = new ChannelRequest(bot, channel).getNames().iterator();i.hasNext();)
+		{
+			userList.add(new UserRequest(bot, i.next()).getUser());
+		}
+		
+		
+		List<IRCUser> distinctUserList = new LinkedList<IRCUser>();
+		for (Iterator<IRCUser> i = userList.iterator();i.hasNext();)
+		{
+			IRCUser testUser=i.next();
+			boolean contained=false;
+			for (Iterator<IRCUser> j = distinctUserList.iterator();j.hasNext();)
+			{
+				if (new IRCUserDecorator(j.next()).equals(new IRCUserDecorator(testUser))){contained=true;} //Detect clone
+			}
+			if (!contained){distinctUserList.add(testUser);}
+		}
+		bot.msg(channel, "Anzahl User in " + channel + ": " + distinctUserList.size());
+	}
+	
+	
+}

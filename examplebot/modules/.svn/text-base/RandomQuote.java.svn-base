@@ -1,0 +1,66 @@
+package modules;
+
+import org.schwering.irc.lib.IRCUser;
+
+import java.util.*;
+import core.*;
+import logging.*;
+import utils.*;
+
+public class RandomQuote implements BotCommand {
+
+	public String getUsage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void execute(Bot bot, String channel, IRCUser user, String message)
+			throws BotException {
+
+		SimpleStringTokenizer messageToken = new SimpleStringTokenizer(message);
+		String nickName=null;
+		if (messageToken.hasMoreTokens()) {
+			nickName = messageToken.nextToken();
+		}
+		ArrayList<MessageEvent> list = new ArrayList<MessageEvent>();
+
+		for (LogEvent t : bot.getLog().iterable(channel)) {
+
+			//System.out.println("Now i have goody!?");
+			if (t != null) {
+				if (t instanceof MessageEvent) {
+					//System.out.println("Really have goody!!");
+					MessageEvent m = (MessageEvent) t;
+					if (nickName == null || m.getUser().getNick().equals(nickName)) {
+						list.add(m);
+					}
+				}
+			}
+		}
+
+		if (list.size() < 1) {
+			
+			bot.msg(channel, "Keine Quotes gefunden");
+			return;
+		}
+
+		int randomValue = (int) (new Random().nextDouble() * list.size());
+
+		if (randomValue >= list.size()) {
+			randomValue = list.size() - 1;
+		}
+
+		if (randomValue < 0) {
+			randomValue = 0;
+		}
+
+		MessageEvent randomQuote = list.get(randomValue);
+		bot.msg(channel, "random quote: " + randomQuote.logString());
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "randomquote";
+	}
+
+}

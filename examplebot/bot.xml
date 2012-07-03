@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<settings>
+	<network host="irc.euirc.net" port="6667">
+		<nickname>thechef</nickname>
+		<password>iwonttellyou</password>
+		<username>liandrin</username>
+		<email>your@email</email>
+		
+		<admin>liandri-frosch.euirc.net</admin>
+		<channel>#wog</channel>
+		<channel>#worldofgothic</channel>
+		<channel>#wog.quiz</channel>
+		<channel>#wop</channel>
+		<channel>#wor</channel>
+		<channel>#wopb</channel>
+		<channel>#worldofgothic.de</channel>
+		<channel>#worldofpiranha</channel>
+		<channel>#worldofpiranha.de</channel>
+		<channel>#worldofpiranhabytes</channel>
+		<channel>#liandri</channel>
+	</network>
+</settings>

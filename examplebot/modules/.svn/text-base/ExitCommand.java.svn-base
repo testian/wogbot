@@ -1,0 +1,24 @@
+package modules;
+import org.schwering.irc.lib.IRCUser;
+
+import core.*;
+
+public class ExitCommand implements BotCommand {
+
+	public void execute(Bot bot, String channel, IRCUser user, String message) throws BotException {
+		bot.assertAdmin(user);
+		bot.teardown();
+		
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "exit";
+	}
+
+	public String getUsage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

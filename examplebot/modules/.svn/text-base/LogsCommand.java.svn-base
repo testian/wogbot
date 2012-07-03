@@ -1,0 +1,81 @@
+package modules;
+
+import logging.*;
+
+import org.schwering.irc.lib.IRCUser;
+
+import core.Bot;
+import core.BotCommand;
+import core.BotException;
+import utils.*;
+
+public class LogsCommand implements BotCommand {
+
+	public String getUsage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void execute(Bot bot, String channel, IRCUser user, String message)
+			throws BotException {
+
+		RingList<LogEvent> eventCache = new RingList<LogEvent>(40);
+		boolean userOnline = false;
+		for (LogEvent t : bot.getLog().currentLog(channel)) {
+
+			// System.out.println("Now i have goody!?");
+			if (t != null) {
+				if (t instanceof KickEvent) {
+					KickEvent kick = (KickEvent) t;
+					if (kick.getKickedUser().equals(user.getNick())) {
+						userOnline = false;
+					}
+				} else if (t instanceof PartEvent || t instanceof QuitEvent)
+				{
+					AbstractMessageEvent leave = (AbstractMessageEvent)t;
+					if (user.getNick().equals(leave.getUser().getNick()) || user.getHost().equals(leave.getUser().getHost()))
+					{
+						userOnline = false;
+					}
+				} else if (t instanceof JoinEvent)
+				{
+					JoinEvent join = (JoinEvent)t;
+					if (user.getNick().equals(join.getUser().getNick()) || user.getHost().equals(join.getUser().getHost()))
+					{
+						userOnline=true;
+					}
+
+
+
+				} else if (t instanceof MessageEvent)
+				{
+					MessageEvent msg = (MessageEvent)t;
+					if (user.getNick().equals(msg.getUser().getNick()) || user.getHost().equals(msg.getUser().getHost()))
+					{
+						userOnline=true;
+					}
+				}
+				
+					if (!userOnline)
+					{
+						//System.out.println("Not online: " + t.logString());
+						eventCache.put(t);
+					}/* else {
+						System.out.println("Online: " + t.logString());
+					}*/
+				
+			}
+		}
+		for ( LogEvent t: eventCache)
+		{
+			bot.getConnection().doPrivmsg(user.getNick(),t.logString());
+		}
+
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "logs";
+	}
+
+}

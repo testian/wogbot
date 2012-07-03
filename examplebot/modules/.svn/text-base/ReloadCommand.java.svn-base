@@ -1,0 +1,23 @@
+package staticmodules;
+
+import org.schwering.irc.lib.IRCUser;
+
+import core.*;
+
+public class ReloadCommand implements BotCommand {
+
+	public String getName()
+	{
+		return "reload";
+	}
+
+	public void execute(Bot bot, String channel, IRCUser user, String message) throws PermissionDeniedException {
+		// TODO Auto-generated method stub
+		bot.assertAdmin(user);
+		int moduleCount = bot.getModuleManager().reload("modules");
+		bot.msg(channel, "Loaded " + moduleCount + " modules");
+	}
+
+	
+	
+}

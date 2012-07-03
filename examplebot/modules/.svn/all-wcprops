@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/liandri/!svn/ver/7/wogbot/modules
+END
+RandomQuote.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/liandri/!svn/ver/2/wogbot/modules/RandomQuote.java
+END
+SeenCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/liandri/!svn/ver/5/wogbot/modules/SeenCommand.java
+END
+JoinCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/liandri/!svn/ver/2/wogbot/modules/JoinCommand.java
+END
+EchoCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/liandri/!svn/ver/2/wogbot/modules/EchoCommand.java
+END
+UserCountCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/liandri/!svn/ver/2/wogbot/modules/UserCountCommand.java
+END
+LogsCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/liandri/!svn/ver/2/wogbot/modules/LogsCommand.java
+END
+InfoCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/liandri/!svn/ver/2/wogbot/modules/InfoCommand.java
+END
+ReconnectCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/liandri/!svn/ver/2/wogbot/modules/ReconnectCommand.java
+END
+ExitCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/liandri/!svn/ver/2/wogbot/modules/ExitCommand.java
+END
+StartvoteCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/liandri/!svn/ver/19/wogbot/modules/StartvoteCommand.java
+END
+TimemachineCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/liandri/!svn/ver/21/wogbot/modules/TimemachineCommand.java
+END
+VoteCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/liandri/!svn/ver/2/wogbot/modules/VoteCommand.java
+END
+TaskCommand.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/liandri/!svn/ver/2/wogbot/modules/TaskCommand.java
+END

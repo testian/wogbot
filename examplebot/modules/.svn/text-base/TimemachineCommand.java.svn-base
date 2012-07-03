@@ -1,0 +1,99 @@
+package modules;
+
+import org.schwering.irc.lib.IRCUser;
+
+import core.*;
+import utils.*;
+import logging.*;
+import java.util.*;
+import java.text.*;
+
+public class TimemachineCommand implements BotCommand {
+
+	public String getUsage() {
+		// TODO Auto-generated method stub
+		return "<Datum> - Unpräzise Angaben werden mit dem jetzigen Zeitpunkt ergänzt. Wird z.B. nur der Tag angegeben, aber keine Tageszeit, dann reist man genau 24*N Stunden in die Vergangenheit.";
+	}
+
+	public void execute(Bot bot, String channel, IRCUser user, String message)
+			throws BotException {
+		long currentTime = System.currentTimeMillis();
+		SimpleStringTokenizer messageToken = new SimpleStringTokenizer(message);
+		if (!messageToken.hasMoreTokens()){bot.msg(channel, "Gib ein Datum an");return;}
+
+		
+		
+		try {
+		long time = new FuzzyDateParser(Locale.GERMAN,currentTime).parse(message).getTime();
+		if (currentTime/1000 < time/1000)
+		{
+			bot.msg(channel, "Sorry " + user + ", der Blick in die Zukunft steht noch auf der Todo-List");
+			return;
+		}
+		if (time/1000 == currentTime/1000)
+		{
+			bot.msg(channel, "Die Geheimnisse der Gegenwart, JETZT!");
+			return;
+		}
+		if (currentTime-time  > 86400000000l)
+		{
+			bot.msg(channel, "Maximal 1000 Tage in die Vergangenheit");
+			return;
+		}
+		
+		
+		
+		//long time = currentTime - daysBack*60000;
+		Iterator<LogEvent> i;
+		bot.msg(channel, "Wiedergabe: " + new SimpleDateFormat("EEEEE, d. MMMMM yyyy HH:mm:ss",Locale.GERMAN).format(new Date(time)));
+		long maxSleepRemaining=600000;
+		LinkedList<LogEvent> logEvents = new LinkedList<LogEvent>();
+		LinkedList<Long> interval = new LinkedList<Long>();
+		long sleptTime=0;
+		for (i = bot.getLog().iterable(channel).iterator();i.hasNext();)
+		{
+			LogEvent currentEvent = i.next();
+			if (currentEvent.getTimestamp()>time)
+			{
+				long sleepTime = currentEvent.getTimestamp()-time-sleptTime;
+				sleptTime+=sleepTime;
+				
+				if (sleepTime>=0)
+				{
+					maxSleepRemaining-=sleepTime;
+					
+					if (maxSleepRemaining<0){break;}
+					logEvents.add(currentEvent);
+					interval.add(sleepTime);
+				}
+			}
+		}
+		
+		Iterator<Long> timeIterator = interval.iterator();
+		for (i = logEvents.iterator();i.hasNext();)
+		{
+			long sleepTime=timeIterator.next();
+			if (sleepTime>0){
+				try {
+				Thread.sleep(sleepTime);
+				bot.msg(channel, i.next().logString());
+				}catch(InterruptedException ex){break;}
+			}
+		}
+		/*if (sleepTime>0){
+		try {
+		Thread.sleep(sleepTime);
+		bot.msg(channel, currentEvent.logString());
+		}catch(InterruptedException ex){break;}
+	}*/
+			
+		} catch (ParseException ex){bot.msg(channel, "Kein gültiges Datum angegeben");return;}
+
+	}
+
+	public String getName() {
+		
+		return "timemachine";
+	}
+
+}

@@ -1,0 +1,27 @@
+package modules;
+
+import org.schwering.irc.lib.*;
+
+import core.*;
+
+
+public class ReconnectCommand implements BotCommand {
+
+
+
+	public String getUsage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public void execute(Bot bot, String channel, IRCUser user, String message)
+			throws PermissionDeniedException {
+		bot.assertAdmin(user);
+		bot.reconnect();
+
+	}
+	public String getName()
+	{
+		return "reconnect";
+	}
+
+}
