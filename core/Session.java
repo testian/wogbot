@@ -154,9 +154,6 @@ public class Session implements TaskManager {
     public Enumeration<String> getMonitoredChannels() {
     return monitors.keys();
     }
-    public NetReporter getNetReporter() {
-    return nr;
-    }
     public synchronized void connect() {
         setupConn();
         try {
