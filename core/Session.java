@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-import networkreporter.*;
+//import networkreporter.*;
 
 import utils.LinkedListDecorator;
 
@@ -18,7 +18,7 @@ public class Session implements TaskManager {
     private IRCConnection conn;
     private MainEventHandler eventHandler;
 
-    private NetReporter nr;
+    //private NetReporter nr;
     private ModuleManager moduleManager;
     private LinkedList<SessionTask> taskList;
     private SessionCommandManager commandManager;
