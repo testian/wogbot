@@ -116,31 +116,7 @@ public class Session implements TaskManager {
         eventHandler = new MainEventHandler(this);
     
     
-        try {
-        jcifs.Config.load(new FileInputStream("jcifs.properties"));   
-        } catch (IOException ex) {
-        System.err.println("No jcifs.properties found");
-        }
-        //jcifs.Config.setProperty("jcifs.netbios.baddr", "10.8.0.255");
-        //jcifs.Config.setProperty("jcifs.netbios.retryTimeout", "60000");
-        //jcifs.Config.setProperty("jcifs.netbios.soTimeout", "70000");
         
-        nr = new SmbNetReporter(new byte[]{10,8,0,0},24,16);
-        final NetReporter fnr = nr;
-        final NetworkListenerIRC nl = new NetworkListenerIRC(this);
-        nr.addListener(nl);
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                synchronized (fnr) {
-                fnr.scan();
-                }
-            }
-
-        }, 10000, 1000*60*10);
-
 
 
         commandManager = new SessionCommandManager(this);
